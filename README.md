@@ -1,158 +1,74 @@
-<div align="center">
+# Aditya Sharma
 
-# ADITYA SHARMA
+### Computer Science & Data Science Student
 
-### `COMPUTER SCIENCE • DATA SCIENCE • AI`
+B.Tech CSE (Data Science) · NMIMS MPSTME, Shirpur
 
-**B.Tech CSE (Data Science) · NMIMS MPSTME, Shirpur**
-
-`AI / ML` · `DATA SCIENCE` · `CYBERSECURITY` · `DEVELOPMENT`
-
-<br>
-
-[![GitHub](https://img.shields.io/badge/GITHUB-Adix10-0D1117?style=for-the-badge&logo=github&logoColor=38BDF8)](https://github.com/Adix10)
-[![DSA](https://img.shields.io/badge/DSA-PRACTICE-0D1117?style=for-the-badge&logo=leetcode&logoColor=38BDF8)](https://github.com/Adix10/DSA-Coding-Practice)
-
-</div>
+I’m a Computer Science & Data Science student interested in **AI, Data Science, Cybersecurity, and software development**. I enjoy building practical solutions, exploring new technologies, and improving my problem-solving skills.
 
 ---
 
-## `01` / ABOUT
+## TECH STACK
 
-> **Building. Learning. Experimenting.**
+### Languages
 
-I'm a Computer Science & Data Science student interested in building practical solutions using **Artificial Intelligence, Data Science, Cybersecurity and Software Development**.
+<p>
+<img src="https://skillicons.dev/icons?i=c,cpp,java,python" height="45">
+</p>
 
-I enjoy **hackathons, problem solving, experimentation and turning ideas into working projects.**
+### AI / Data
 
----
+<p>
+<img src="https://skillicons.dev/icons?i=python,tensorflow,opencv" height="45">
+</p>
 
-## `02` / TECHNICAL STACK
+### Web & Development
 
-### LANGUAGES
+<p>
+<img src="https://skillicons.dev/icons?i=html,css,javascript,flutter" height="45">
+</p>
 
-`C` `C++` `Java` `Python`
+### Tools
 
-### AI / DATA
-
-`TensorFlow` `OpenCV` `Data Science` `LLM Integration`
-
-### DEVELOPMENT
-
-`HTML` `CSS` `JavaScript` `Flutter`
-
-### TOOLS / CONCEPTS
-
-`Git` `GitHub` `DSA` `Problem Solving` `Cybersecurity`
+<p>
+<img src="https://skillicons.dev/icons?i=git,github,vscode" height="45">
+</p>
 
 ---
 
-## `03` / SELECTED PROJECTS
+## CURRENTLY LEARNING
 
-### `01` — CARBONFORGE
+<p>
+<img src="https://skillicons.dev/icons?i=react,nodejs,express,mongodb" height="45">
+</p>
 
-**Carbon Management & Market Decision Platform**
-
-A platform concept focused on carbon-emission tracking, carbon sinks, methane monitoring and carbon-neutrality decisions for Indian coal mines.
-
-`AI` `DATA SCIENCE` `SUSTAINABILITY`
+DSA · AI / ML · Cybersecurity · Data Science
 
 ---
 
-### `02` — DEEPFAKE DETECTION
+## GITHUB ACTIVITY
 
-**AI-Based Manipulated Media Detection**
+<!-- Custom contribution calendar will be added here -->
 
-A computer-vision project focused on identifying manipulated media using AI-based detection techniques.
-
-`PYTHON` `OPENCV` `DEEP LEARNING`
-
----
-
-### `03` — AI SMART PROCTORING
-
-**AI-Powered Examination Monitoring**
-
-A computer-vision based project exploring intelligent monitoring for online examination environments.
-
-`AI / ML` `COMPUTER VISION`
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Adix10&show_icons=true&hide_border=true&theme=transparent" height="165">
+</p>
 
 ---
 
-### `04` — SWASTHYA SHAK
+## CONNECT
 
-**Healthcare Support Platform**
-
-A healthcare-focused digital platform designed around accessible health information and practical healthcare support.
-
-`WEB DEVELOPMENT` `HEALTHCARE`
-
----
-
-## `04` / DSA
-
-I practise programming across different platforms and languages to strengthen my problem-solving fundamentals.
-
-| PLATFORM | LANGUAGE |
-|:---|:---|
-| **LeetCode** | Java |
-| **GeeksforGeeks** | C |
-| **CodeChef** | Python |
-
-**Practice Repository**
-
-→ [Adix10 / DSA-Coding-Practice](https://github.com/Adix10/DSA-Coding-Practice)
+<p>
+<a href="https://github.com/Adix10">
+<img src="https://skillicons.dev/icons?i=github" height="40">
+</a>
+<a href="https://www.linkedin.com/">
+<img src="https://skillicons.dev/icons?i=linkedin" height="40">
+</a>
+</p>
 
 ---
 
-## `05` / ACHIEVEMENTS
-
-`03` **AMBIORA'26** — Deepfake Detection Challenge
-
-`01` **University Day** — Quiz, NMIMS Shirpur
-
-`LEAD` **Echelon'26** — 24-hour Hackathon
-
-`LEAD` **Yugantar 2.0** — IIC, NMIMS Shirpur
-
-Multiple hackathons · technical competitions · collaborative projects
-
----
-
-## `06` / CURRENTLY EXPLORING
-
-`AI / ML` · `DATA SCIENCE` · `CYBERSECURITY`
-
-`DSA` · `FLUTTER` · `FULL-STACK DEVELOPMENT`
-
----
-
-## `07` / GITHUB ACTIVITY
-
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=Adix10&show_icons=true&hide_border=true&bg_color=0D1117&title_color=38BDF8&icon_color=22D3EE&text_color=C9D1D9" height="165">
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Adix10&layout=compact&hide_border=true&bg_color=0D1117&title_color=38BDF8&text_color=C9D1D9" height="165">
-
-<br><br>
-
-<img src="https://streak-stats.demolab.com?user=Adix10&hide_border=true&background=0D1117&ring=38BDF8&fire=22D3EE&currStreakLabel=38BDF8&sideLabels=C9D1D9&currStreakNum=C9D1D9&sideNums=C9D1D9&dates=8B949E" width="65%">
-
-</div>
-
----
-
-## `08` / CONNECT
-
-<div align="center">
-
-[![GitHub](https://img.shields.io/badge/GITHUB-Adix10-0D1117?style=for-the-badge&logo=github&logoColor=38BDF8)](https://github.com/Adix10)
-
-[![LinkedIn](https://img.shields.io/badge/LINKEDIN-CONNECT-0D1117?style=for-the-badge&logo=linkedin&logoColor=38BDF8)](https://www.linkedin.com/)
-
-<br>
-
-`BUILD • LEARN • EXPERIMENT • REPEAT`
-
-</div>
+<p align="center">
+<sub>Building. Learning. Improving.</sub>
+</p>
