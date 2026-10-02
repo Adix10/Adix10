@@ -21,8 +21,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python3 <<'PY'
-          import os
           import json
+          import os
           import urllib.request
           from datetime import datetime, timedelta, timezone
 
@@ -68,7 +68,8 @@ jobs:
                   "Authorization": f"Bearer {token}",
                   "Content-Type": "application/json",
                   "User-Agent": "Adix10-Contribution-Breaker"
-              }
+              },
+              method="POST"
           )
 
           with urllib.request.urlopen(request) as response:
@@ -82,59 +83,45 @@ jobs:
           total = calendar["totalContributions"]
 
           days = []
-
           for week in calendar["weeks"]:
-              for day in week["contributionDays"]:
-                  days.append(day)
+              days.extend(week["contributionDays"])
 
           days = days[-364:]
 
           max_count = max(
-              [day["contributionCount"] for day in days] or [1]
+              (day["contributionCount"] for day in days),
+              default=0
           )
 
           def level(count):
               if count == 0:
                   return 0
-              if count <= max(1, max_count * 0.20):
+              if count <= 2:
                   return 1
-              if count <= max(1, max_count * 0.40):
+              if count <= 5:
                   return 2
-              if count <= max(1, max_count * 0.65):
+              if count <= 9:
                   return 3
               return 4
 
-          # ---------------------------------------------------------
-          # SVG
-          # ---------------------------------------------------------
-
-          width = 1100
-          height = 500
-
           svg = []
 
-          svg.append(f'''<svg xmlns="http://www.w3.org/2000/svg"
-          width="{width}"
-          height="{height}"
-          viewBox="0 0 {width} {height}">
+          svg.append('''<svg xmlns="http://www.w3.org/2000/svg"
+          width="1100"
+          height="500"
+          viewBox="0 0 1100 500">
 
           <defs>
-
             <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#050B14"/>
-              <stop offset="50%" stop-color="#081522"/>
-              <stop offset="100%" stop-color="#050912"/>
+              <stop offset="0%" stop-color="#020617"/>
+              <stop offset="50%" stop-color="#07111F"/>
+              <stop offset="100%" stop-color="#020617"/>
             </linearGradient>
 
             <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#0EA5E9"/>
+              <stop offset="0%" stop-color="#0891B2"/>
               <stop offset="50%" stop-color="#38BDF8"/>
               <stop offset="100%" stop-color="#67E8F9"/>
-            </linearGradient>
-
-            <linearGradient id="violet" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#6366F1"/>
-              <stop offset="100%" stop-color="#A78BFA"/>
             </linearGradient>
 
             <filter id="glow">
@@ -146,222 +133,151 @@ jobs:
             </filter>
 
             <filter id="smallGlow">
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feGaussianBlur stdDeviation="2"/>
             </filter>
 
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40"
-                    fill="none"
-                    stroke="#38BDF8"
-                    stroke-opacity="0.055"
-                    stroke-width="1"/>
-            </pattern>
-
             <style>
-              .mono {
-                font-family: 'Courier New', monospace;
-              }
+              .mono {{
+                font-family: monospace;
+                letter-spacing: 1px;
+              }}
 
-              .title {
-                font-family: 'Courier New', monospace;
-                font-weight: bold;
-                letter-spacing: 4px;
-              }
-
-              .tiny {
-                font-family: 'Courier New', monospace;
+              .tiny {{
+                font-family: monospace;
                 font-size: 11px;
-                letter-spacing: 2px;
-              }
+                letter-spacing: 1px;
+              }}
 
-              .brick {
+              .brick {{
                 animation: brickPulse 3s ease-in-out infinite;
-              }
+              }}
 
-              .brick2 {
-                animation: brickPulse 3s ease-in-out 0.5s infinite;
-              }
+              .brick2 {{
+                animation: brickPulse 4s ease-in-out infinite;
+              }}
 
-              .brick3 {
-                animation: brickPulse 3s ease-in-out 1s infinite;
-              }
+              .brick3 {{
+                animation: brickPulse 5s ease-in-out infinite;
+              }}
 
-              .ball {
-                animation: ballMove 2.8s linear infinite;
-              }
+              .ball {{
+                animation: ballMove 3s ease-in-out infinite;
+              }}
 
-              .scan {
+              .scan {{
                 animation: scanMove 4s linear infinite;
-              }
+              }}
 
-              @keyframes brickPulse {
-                0%, 100% { opacity: 0.82; }
-                50% { opacity: 1; }
-              }
+              @keyframes brickPulse {{
+                0%, 100% {{ opacity: 0.82; }}
+                50% {{ opacity: 1; }}
+              }}
 
-              @keyframes ballMove {
-                0% {
-                  transform: translate(0px, 0px);
-                }
-                25% {
-                  transform: translate(55px, -30px);
-                }
-                50% {
-                  transform: translate(105px, 0px);
-                }
-                75% {
-                  transform: translate(55px, 35px);
-                }
-                100% {
-                  transform: translate(0px, 0px);
-                }
-              }
+              @keyframes ballMove {{
+                0% {{ transform: translate(0,0); }}
+                50% {{ transform: translate(70px,-30px); }}
+                100% {{ transform: translate(0,0); }}
+              }}
 
-              @keyframes scanMove {
-                0% {
-                  transform: translateY(0px);
-                  opacity: 0;
-                }
-                15% {
-                  opacity: 0.7;
-                }
-                85% {
-                  opacity: 0.7;
-                }
-                100% {
-                  transform: translateY(330px);
-                  opacity: 0;
-                }
-              }
+              @keyframes scanMove {{
+                0% {{ transform: translateY(0); opacity: 0; }}
+                15% {{ opacity: 0.7; }}
+                85% {{ opacity: 0.7; }}
+                100% {{ transform: translateY(280px); opacity: 0; }}
+              }}
             </style>
-
           </defs>
 
-          <!-- BACKGROUND -->
+          <rect width="1100" height="500" fill="url(#bg)"/>
 
-          <rect width="1100" height="500" rx="18" fill="url(#bg)"/>
-
-          <rect x="1" y="1"
-                width="1098"
-                height="498"
-                rx="17"
+          <rect x="25" y="25"
+                width="1050"
+                height="450"
+                rx="16"
                 fill="none"
-                stroke="#38BDF8"
-                stroke-opacity="0.35"
-                stroke-width="2"/>
+                stroke="#164E63"
+                stroke-width="1"/>
 
-          <rect x="18" y="18"
-                width="1064"
-                height="464"
-                rx="12"
-                fill="url(#grid)"/>
-
-          <!-- TOP BAR -->
-
-          <text x="45"
-                y="58"
+          <text x="55"
+                y="70"
                 fill="#67E8F9"
-                font-size="20"
-                class="title">
+                font-size="24"
+                font-family="monospace"
+                font-weight="bold">
             CONTRIBUTION BREAKER
           </text>
 
-          <text x="45"
-                y="82"
+          <text x="55"
+                y="94"
                 fill="#64748B"
                 class="tiny">
-            GITHUB CONTRIBUTION DATA // LAST 365 DAYS
+            GITHUB ACTIVITY // LIVE DATA
           </text>
 
-          <circle cx="1020"
-                  cy="51"
-                  r="6"
-                  fill="#22C55E"
-                  filter="url(#smallGlow)"/>
+          <!-- PLAYER PANEL -->
 
-          <text x="1035"
-                y="55"
-                fill="#94A3B8"
-                class="tiny">
-            ONLINE
-          </text>
-
-          <!-- LEFT STATUS PANEL -->
-
-          <rect x="42"
-                y="112"
-                width="205"
-                height="305"
+          <rect x="45"
+                y="135"
+                width="190"
+                height="285"
                 rx="10"
-                fill="#07111D"
-                stroke="#1E3A4D"
-                stroke-width="1"/>
+                fill="#040A12"
+                stroke="#1E3A4D"/>
 
           <text x="62"
-                y="145"
-                fill="#38BDF8"
-                class="title"
-                font-size="12">
+                y="170"
+                fill="#64748B"
+                class="tiny">
             PLAYER
           </text>
 
           <text x="62"
-                y="175"
-                fill="#E2E8F0"
+                y="198"
+                fill="#67E8F9"
                 font-size="20"
                 class="mono">
             ADIX10
           </text>
 
-          <line x1="62"
-                y1="192"
-                x2="225"
-                y2="192"
-                stroke="#1E3A4D"/>
-
           <text x="62"
-                y="222"
+                y="235"
                 fill="#64748B"
                 class="tiny">
             SCORE
           </text>
 
           <text x="62"
-                y="250"
+                y="265"
                 fill="#67E8F9"
                 font-size="25"
                 class="mono">
-            {total}
+            TOTAL_PLACEHOLDER
           </text>
 
           <text x="62"
-                y="283"
+                y="300"
                 fill="#64748B"
                 class="tiny">
             MAX DAY
           </text>
 
           <text x="62"
-                y="310"
+                y="330"
                 fill="#A78BFA"
                 font-size="22"
                 class="mono">
-            {max_count}
+            MAX_PLACEHOLDER
           </text>
 
           <text x="62"
-                y="342"
+                y="362"
                 fill="#64748B"
                 class="tiny">
             DATA SOURCE
           </text>
 
           <text x="62"
-                y="366"
+                y="386"
                 fill="#CBD5E1"
                 font-size="13"
                 class="mono">
@@ -369,7 +285,7 @@ jobs:
           </text>
 
           <text x="62"
-                y="389"
+                y="408"
                 fill="#CBD5E1"
                 font-size="13"
                 class="mono">
@@ -391,8 +307,7 @@ jobs:
                 height="305"
                 rx="10"
                 fill="#040A12"
-                stroke="#1E3A4D"
-                stroke-width="1"/>
+                stroke="#1E3A4D"/>
 
           <text x="295"
                 y="142"
@@ -402,7 +317,6 @@ jobs:
           </text>
 
           <!-- CONTRIBUTION BRICKS -->
-
           ''')
 
           start_x = 300
@@ -413,7 +327,6 @@ jobs:
           gap_x = 5
           gap_y = 8
 
-          # 52 columns x 7 rows = 364 days
           for i, day in enumerate(days):
               col = i // 7
               row = i % 7
@@ -455,9 +368,10 @@ jobs:
                   stroke-width="0.7"/>'''
               )
 
-          # BALL
-
           svg.append('''
+
+          <!-- BALL -->
+
           <g class="ball" transform="translate(710 285)">
             <circle r="7"
                     fill="#67E8F9"
@@ -592,8 +506,24 @@ jobs:
           </svg>
           ''')
 
-          with open("assets/activity-matrix.svg", "w", encoding="utf-8") as f:
-              f.write("\n".join(svg))
+          svg_text = "\n".join(svg)
+
+          svg_text = svg_text.replace(
+              "TOTAL_PLACEHOLDER",
+              str(total)
+          )
+
+          svg_text = svg_text.replace(
+              "MAX_PLACEHOLDER",
+              str(max_count)
+          )
+
+          with open(
+              "assets/activity-matrix.svg",
+              "w",
+              encoding="utf-8"
+          ) as f:
+              f.write(svg_text)
 
           print("Contribution Breaker generated successfully.")
           print(f"Total contributions: {total}")
