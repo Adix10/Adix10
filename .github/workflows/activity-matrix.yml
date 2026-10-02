@@ -1,5 +1,4 @@
-
-name: Update Activity Matrix
+name: Update Contribution Breaker
 
 on:
   schedule:
@@ -17,16 +16,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate activity matrix
+      - name: Generate Contribution Breaker
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python3 <<'PY'
+          import os
           import json
           import urllib.request
-          from datetime import datetime, timedelta
+          from datetime import datetime, timedelta, timezone
 
           username = "Adix10"
+          token = os.environ["GITHUB_TOKEN"]
+
+          end_date = datetime.now(timezone.utc)
+          start_date = end_date - timedelta(days=365)
 
           query = """
           query($login: String!, $from: DateTime!, $to: DateTime!) {
@@ -38,7 +42,6 @@ jobs:
                     contributionDays {
                       date
                       contributionCount
-                      contributionLevel
                     }
                   }
                 }
@@ -47,32 +50,36 @@ jobs:
           }
           """
 
-          today = datetime.utcnow()
-          start = today - timedelta(days=365)
-
-          payload = {
-              "query": query,
-              "variables": {
-                  "login": username,
-                  "from": start.isoformat() + "Z",
-                  "to": today.isoformat() + "Z"
-              }
+          variables = {
+              "login": username,
+              "from": start_date.isoformat(),
+              "to": end_date.isoformat()
           }
+
+          payload = json.dumps({
+              "query": query,
+              "variables": variables
+          }).encode("utf-8")
 
           request = urllib.request.Request(
               "https://api.github.com/graphql",
-              data=json.dumps(payload).encode(),
+              data=payload,
               headers={
-                  "Authorization": "Bearer " + __import__("os").environ["GITHUB_TOKEN"],
+                  "Authorization": f"Bearer {token}",
                   "Content-Type": "application/json",
-                  "User-Agent": "Adix10-Activity-Matrix"
+                  "User-Agent": "Adix10-Contribution-Breaker"
               }
           )
 
           with urllib.request.urlopen(request) as response:
-              data = json.load(response)
+              data = json.loads(response.read().decode("utf-8"))
+
+          if "errors" in data:
+              raise RuntimeError(data["errors"])
 
           calendar = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+
+          total = calendar["totalContributions"]
 
           days = []
 
@@ -80,234 +87,529 @@ jobs:
               for day in week["contributionDays"]:
                   days.append(day)
 
-          days = days[-371:]
+          days = days[-364:]
 
-          cells = []
+          max_count = max(
+              [day["contributionCount"] for day in days] or [1]
+          )
 
-          for index, day in enumerate(days):
-              count = day["contributionCount"]
-
+          def level(count):
               if count == 0:
-                  level = 0
-              elif count <= 2:
-                  level = 1
-              elif count <= 5:
-                  level = 2
-              elif count <= 9:
-                  level = 3
-              else:
-                  level = 4
+                  return 0
+              if count <= max(1, max_count * 0.20):
+                  return 1
+              if count <= max(1, max_count * 0.40):
+                  return 2
+              if count <= max(1, max_count * 0.65):
+                  return 3
+              return 4
 
-              cells.append((index, day["date"], count, level))
+          # ---------------------------------------------------------
+          # SVG
+          # ---------------------------------------------------------
 
-          colors = [
-              "#0F172A",
-              "#164E63",
-              "#075985",
-              "#0284C7",
-              "#38BDF8"
-          ]
+          width = 1100
+          height = 500
 
-          width = 1000
-          height = 300
+          svg = []
 
-          svg = f'''<svg width="{width}" height="{height}"
-          viewBox="0 0 {width} {height}"
-          xmlns="http://www.w3.org/2000/svg">
+          svg.append(f'''<svg xmlns="http://www.w3.org/2000/svg"
+          width="{width}"
+          height="{height}"
+          viewBox="0 0 {width} {height}">
 
           <defs>
+
             <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#050A10"/>
-              <stop offset="55%" stop-color="#08111C"/>
-              <stop offset="100%" stop-color="#0B1220"/>
+              <stop offset="0%" stop-color="#050B14"/>
+              <stop offset="50%" stop-color="#081522"/>
+              <stop offset="100%" stop-color="#050912"/>
             </linearGradient>
 
-            <pattern id="grid" width="25" height="25"
-                     patternUnits="userSpaceOnUse">
-              <path d="M25 0 L0 0 0 25"
-                    fill="none"
-                    stroke="#1E293B"
-                    stroke-width="0.6"
-                    opacity="0.35"/>
-            </pattern>
+            <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0EA5E9"/>
+              <stop offset="50%" stop-color="#38BDF8"/>
+              <stop offset="100%" stop-color="#67E8F9"/>
+            </linearGradient>
+
+            <linearGradient id="violet" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="100%" stop-color="#A78BFA"/>
+            </linearGradient>
 
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feGaussianBlur stdDeviation="4" result="blur"/>
               <feMerge>
                 <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
+
+            <filter id="smallGlow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40"
+                    fill="none"
+                    stroke="#38BDF8"
+                    stroke-opacity="0.055"
+                    stroke-width="1"/>
+            </pattern>
+
+            <style>
+              .mono {
+                font-family: 'Courier New', monospace;
+              }
+
+              .title {
+                font-family: 'Courier New', monospace;
+                font-weight: bold;
+                letter-spacing: 4px;
+              }
+
+              .tiny {
+                font-family: 'Courier New', monospace;
+                font-size: 11px;
+                letter-spacing: 2px;
+              }
+
+              .brick {
+                animation: brickPulse 3s ease-in-out infinite;
+              }
+
+              .brick2 {
+                animation: brickPulse 3s ease-in-out 0.5s infinite;
+              }
+
+              .brick3 {
+                animation: brickPulse 3s ease-in-out 1s infinite;
+              }
+
+              .ball {
+                animation: ballMove 2.8s linear infinite;
+              }
+
+              .scan {
+                animation: scanMove 4s linear infinite;
+              }
+
+              @keyframes brickPulse {
+                0%, 100% { opacity: 0.82; }
+                50% { opacity: 1; }
+              }
+
+              @keyframes ballMove {
+                0% {
+                  transform: translate(0px, 0px);
+                }
+                25% {
+                  transform: translate(55px, -30px);
+                }
+                50% {
+                  transform: translate(105px, 0px);
+                }
+                75% {
+                  transform: translate(55px, 35px);
+                }
+                100% {
+                  transform: translate(0px, 0px);
+                }
+              }
+
+              @keyframes scanMove {
+                0% {
+                  transform: translateY(0px);
+                  opacity: 0;
+                }
+                15% {
+                  opacity: 0.7;
+                }
+                85% {
+                  opacity: 0.7;
+                }
+                100% {
+                  transform: translateY(330px);
+                  opacity: 0;
+                }
+              }
+            </style>
+
           </defs>
 
-          <rect width="1000" height="300" rx="18" fill="url(#bg)"/>
-          <rect width="1000" height="300" rx="18" fill="url(#grid)"/>
+          <!-- BACKGROUND -->
 
-          <rect x="1" y="1" width="998" height="298" rx="18"
+          <rect width="1100" height="500" rx="18" fill="url(#bg)"/>
+
+          <rect x="1" y="1"
+                width="1098"
+                height="498"
+                rx="17"
                 fill="none"
-                stroke="#1E3A52"/>
+                stroke="#38BDF8"
+                stroke-opacity="0.35"
+                stroke-width="2"/>
 
-          <text x="35" y="38"
-                fill="#7DD3FC"
-                font-family="monospace"
-                font-size="13"
-                letter-spacing="2">
-            ACTIVITY MATRIX
+          <rect x="18" y="18"
+                width="1064"
+                height="464"
+                rx="12"
+                fill="url(#grid)"/>
+
+          <!-- TOP BAR -->
+
+          <text x="45"
+                y="58"
+                fill="#67E8F9"
+                font-size="20"
+                class="title">
+            CONTRIBUTION BREAKER
           </text>
 
-          <text x="965" y="38"
+          <text x="45"
+                y="82"
                 fill="#64748B"
-                font-family="monospace"
-                font-size="11"
-                text-anchor="end">
-            GITHUB / LIVE CONTRIBUTION DATA
+                class="tiny">
+            GITHUB CONTRIBUTION DATA // LAST 365 DAYS
           </text>
 
-          <circle cx="38" cy="62" r="4"
+          <circle cx="1020"
+                  cy="51"
+                  r="6"
                   fill="#22C55E"
-                  filter="url(#glow)">
-            <animate attributeName="opacity"
-                     values="1;0.3;1"
-                     dur="2s"
-                     repeatCount="indefinite"/>
-          </circle>
+                  filter="url(#smallGlow)"/>
 
-          <text x="50" y="66"
+          <text x="1035"
+                y="55"
                 fill="#94A3B8"
-                font-family="monospace"
-                font-size="11">
-            ADIX10 • CONTRIBUTION SIGNAL
+                class="tiny">
+            ONLINE
           </text>
 
-          <text x="165" y="92"
+          <!-- LEFT STATUS PANEL -->
+
+          <rect x="42"
+                y="112"
+                width="205"
+                height="305"
+                rx="10"
+                fill="#07111D"
+                stroke="#1E3A4D"
+                stroke-width="1"/>
+
+          <text x="62"
+                y="145"
+                fill="#38BDF8"
+                class="title"
+                font-size="12">
+            PLAYER
+          </text>
+
+          <text x="62"
+                y="175"
+                fill="#E2E8F0"
+                font-size="20"
+                class="mono">
+            ADIX10
+          </text>
+
+          <line x1="62"
+                y1="192"
+                x2="225"
+                y2="192"
+                stroke="#1E3A4D"/>
+
+          <text x="62"
+                y="222"
                 fill="#64748B"
-                font-family="monospace"
-                font-size="9">
-            LAST 12 MONTHS
+                class="tiny">
+            SCORE
           </text>
 
-          <g transform="translate(165,105)">
-          '''
+          <text x="62"
+                y="250"
+                fill="#67E8F9"
+                font-size="25"
+                class="mono">
+            {total}
+          </text>
 
-          cell_size = 14
-          gap = 5
+          <text x="62"
+                y="283"
+                fill="#64748B"
+                class="tiny">
+            MAX DAY
+          </text>
 
-          for index, date, count, level in cells:
-              col = index // 7
-              row = index % 7
+          <text x="62"
+                y="310"
+                fill="#A78BFA"
+                font-size="22"
+                class="mono">
+            {max_count}
+          </text>
 
-              x = col * (cell_size + gap)
-              y = row * (cell_size + gap)
+          <text x="62"
+                y="342"
+                fill="#64748B"
+                class="tiny">
+            DATA SOURCE
+          </text>
 
-              tooltip = f"{date} • {count} contributions"
+          <text x="62"
+                y="366"
+                fill="#CBD5E1"
+                font-size="13"
+                class="mono">
+            github.com
+          </text>
 
-              svg += f'''
-              <rect x="{x}" y="{y}"
-                    width="{cell_size}"
-                    height="{cell_size}"
-                    rx="3"
-                    fill="{colors[level]}">
-                <title>{tooltip}</title>
-              </rect>
-              '''
+          <text x="62"
+                y="389"
+                fill="#CBD5E1"
+                font-size="13"
+                class="mono">
+            /Adix10
+          </text>
 
-          svg += f'''
+          <text x="62"
+                y="410"
+                fill="#22C55E"
+                class="tiny">
+            LIVE DATA STREAM
+          </text>
+
+          <!-- GAME AREA -->
+
+          <rect x="270"
+                y="112"
+                width="788"
+                height="305"
+                rx="10"
+                fill="#040A12"
+                stroke="#1E3A4D"
+                stroke-width="1"/>
+
+          <text x="295"
+                y="142"
+                fill="#64748B"
+                class="tiny">
+            BREAK THE BLOCKS // BUILD THE STREAK
+          </text>
+
+          <!-- CONTRIBUTION BRICKS -->
+
+          ''')
+
+          start_x = 300
+          start_y = 165
+
+          brick_w = 14
+          brick_h = 10
+          gap_x = 5
+          gap_y = 8
+
+          # 52 columns x 7 rows = 364 days
+          for i, day in enumerate(days):
+              col = i // 7
+              row = i % 7
+
+              x = start_x + col * (brick_w + gap_x)
+              y = start_y + row * (brick_h + gap_y)
+
+              lvl = level(day["contributionCount"])
+
+              if lvl == 0:
+                  fill = "#0B1724"
+                  stroke = "#132536"
+              elif lvl == 1:
+                  fill = "#164E63"
+                  stroke = "#155E75"
+              elif lvl == 2:
+                  fill = "#075985"
+                  stroke = "#0284C7"
+              elif lvl == 3:
+                  fill = "#0284C7"
+                  stroke = "#38BDF8"
+              else:
+                  fill = "#38BDF8"
+                  stroke = "#67E8F9"
+
+              cls = "brick" if row % 3 == 0 else (
+                  "brick2" if row % 3 == 1 else "brick3"
+              )
+
+              svg.append(
+                  f'''<rect class="{cls}"
+                  x="{x}"
+                  y="{y}"
+                  width="{brick_w}"
+                  height="{brick_h}"
+                  rx="2"
+                  fill="{fill}"
+                  stroke="{stroke}"
+                  stroke-width="0.7"/>'''
+              )
+
+          # BALL
+
+          svg.append('''
+          <g class="ball" transform="translate(710 285)">
+            <circle r="7"
+                    fill="#67E8F9"
+                    filter="url(#glow)"/>
+            <circle r="3"
+                    fill="#FFFFFF"/>
           </g>
 
-          <text x="165" y="222"
+          <!-- PADDLE -->
+
+          <rect x="650"
+                y="365"
+                width="150"
+                height="9"
+                rx="5"
+                fill="url(#cyan)"
+                filter="url(#smallGlow)"/>
+
+          <rect x="680"
+                y="363"
+                width="90"
+                height="13"
+                rx="6"
+                fill="none"
+                stroke="#67E8F9"
+                stroke-opacity="0.4"/>
+
+          <!-- SCAN LINE -->
+
+          <rect class="scan"
+                x="285"
+                y="150"
+                width="758"
+                height="1"
+                fill="#38BDF8"
+                opacity="0.5"/>
+
+          <!-- BOTTOM HUD -->
+
+          <line x1="295"
+                y1="395"
+                x2="1030"
+                y2="395"
+                stroke="#1E3A4D"/>
+
+          <text x="295"
+                y="410"
                 fill="#64748B"
-                font-family="monospace"
-                font-size="9">
-            ACTIVITY
+                class="tiny">
+            BLOCKS
           </text>
 
-          <rect x="220" y="212" width="13" height="13" rx="2"
-                fill="#0F172A"/>
-          <rect x="239" y="212" width="13" height="13" rx="2"
-                fill="#164E63"/>
-          <rect x="258" y="212" width="13" height="13" rx="2"
-                fill="#075985"/>
-          <rect x="277" y="212" width="13" height="13" rx="2"
-                fill="#0284C7"/>
-          <rect x="296" y="212" width="13" height="13" rx="2"
-                fill="#38BDF8"/>
+          <text x="350"
+                y="410"
+                fill="#CBD5E1"
+                class="tiny">
+            364 DAYS
+          </text>
 
-          <text x="315" y="222"
+          <text x="520"
+                y="410"
                 fill="#64748B"
-                font-family="monospace"
-                font-size="9">
-            LOW → HIGH
+                class="tiny">
+            STATUS
           </text>
 
-          <text x="760" y="110"
-                fill="#7DD3FC"
-                font-family="monospace"
-                font-size="10">
-            CONTRIBUTIONS
+          <text x="575"
+                y="410"
+                fill="#22C55E"
+                class="tiny">
+            ACTIVE
           </text>
 
-          <text x="760" y="145"
-                fill="#E2E8F0"
-                font-family="monospace"
-                font-size="26">
-            {calendar["totalContributions"]}
-          </text>
-
-          <text x="760" y="165"
+          <text x="700"
+                y="410"
                 fill="#64748B"
-                font-family="monospace"
-                font-size="9">
-            TOTAL / LAST YEAR
+                class="tiny">
+            UPDATE
           </text>
 
-          <text x="760" y="195"
-                fill="#7DD3FC"
-                font-family="monospace"
-                font-size="10">
-            SOURCE
+          <text x="760"
+                y="410"
+                fill="#CBD5E1"
+                class="tiny">
+            24H
           </text>
 
-          <text x="760" y="215"
-                fill="#94A3B8"
-                font-family="monospace"
-                font-size="10">
-            github.com/Adix10
+          <text x="895"
+                y="410"
+                fill="#64748B"
+                class="tiny">
+            USER
           </text>
 
-          <text x="35" y="270"
-                fill="#475569"
-                font-family="monospace"
-                font-size="9">
-            DATA_STREAM :: AUTOMATED
+          <text x="945"
+                y="410"
+                fill="#67E8F9"
+                class="tiny">
+            ADIX10
           </text>
 
-          <text x="965" y="270"
-                fill="#475569"
-                font-family="monospace"
-                font-size="9"
+          <!-- LEGEND -->
+
+          <text x="300"
+                y="450"
+                fill="#64748B"
+                class="tiny">
+            ACTIVITY LEVEL
+          </text>
+
+          <rect x="425" y="441" width="12" height="12" rx="2" fill="#0B1724"/>
+          <rect x="445" y="441" width="12" height="12" rx="2" fill="#164E63"/>
+          <rect x="465" y="441" width="12" height="12" rx="2" fill="#075985"/>
+          <rect x="485" y="441" width="12" height="12" rx="2" fill="#0284C7"/>
+          <rect x="505" y="441" width="12" height="12" rx="2" fill="#38BDF8"/>
+
+          <text x="535"
+                y="451"
+                fill="#64748B"
+                class="tiny">
+            LOW
+          </text>
+
+          <text x="1010"
+                y="451"
+                fill="#64748B"
+                class="tiny"
                 text-anchor="end">
-            AUTO_UPDATE :: 24H
+            HIGH
           </text>
 
           </svg>
-          '''
+          ''')
 
-          with open("assets/activity-matrix.svg", "w", encoding="utf-8") as file:
-              file.write(svg)
+          with open("assets/activity-matrix.svg", "w", encoding="utf-8") as f:
+              f.write("\n".join(svg))
 
-          print("Activity matrix updated successfully.")
-          print("Total contributions:", calendar["totalContributions"])
+          print("Contribution Breaker generated successfully.")
+          print(f"Total contributions: {total}")
+          print(f"Maximum daily contributions: {max_count}")
           PY
 
-      - name: Commit updated matrix
+      - name: Commit updated Contribution Breaker
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add assets/activity-matrix.svg
 
-          git diff --cached --quiet || git commit -m "Update activity matrix"
-
-      - name: Push changes
-        run: |
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update contribution breaker"
+            git push
+          fi
