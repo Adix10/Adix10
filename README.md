@@ -1,111 +1,93 @@
-```html
 <p align="center">
   <img src="./assets/cyber-header.svg" width="100%" />
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=16&duration=2600&pause=900&color=7DD3FC&center=true&vCenter=true&width=760&lines=%3E+initializing+Aditya.exe...;%3E+AI+%2F+DATA+SCIENCE+%2F+CYBERSECURITY;%3E+processing+patterns...;%3E+securing+systems...;%3E+building+intelligent+solutions...;%3E+system.status%3D+ONLINE" />
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/SYSTEM-ONLINE-0B1220?style=flat-square&labelColor=050A10&color=22C55E"/>
-  <img src="https://img.shields.io/badge/FOCUS-AI%20%2F%20DATA%20%2F%20SECURITY-0B1220?style=flat-square&labelColor=050A10&color=38BDF8"/>
-  <img src="https://img.shields.io/badge/STATUS-BUILDING-0B1220?style=flat-square&labelColor=050A10&color=A78BFA"/>
-</p>
-
----
-
-<h2 align="center">ABOUT</h2>
-
-<p align="center">
-  <b>B.Tech CSE (Data Science)</b><br>
-  NMIMS MPSTME, Shirpur
-</p>
-
-<p align="center">
-  I’m interested in the intersection of <b>Artificial Intelligence</b>,
-  <b>Data Science</b> and <b>Cybersecurity</b>.
-  <br><br>
-  I enjoy solving problems, experimenting with technology,
-  analysing patterns and turning ideas into practical systems.
-</p>
-
----
-
-<h2 align="center">TECH STACK</h2>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=c,cpp,java,python,javascript" height="52"/>
-</p>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=tensorflow,opencv,python" height="52"/>
-</p>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,react,nodejs,express,flutter" height="52"/>
-</p>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=mongodb,git,github,vscode" height="52"/>
-</p>
-
-<p align="center">
-  <sub>
-    C • C++ • Java • Python • JavaScript • TensorFlow • OpenCV •
-    HTML • CSS • React • Node.js • Express • Flutter • MongoDB • Git
-  </sub>
-</p>
-
----
-
-<h2 align="center">CURRENT STATE</h2>
-
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=14&duration=2200&pause=700&color=94A3B8&center=true&vCenter=true&width=720&lines=Scanning+patterns...;Processing+data...;Learning+algorithms...;Exploring+security...;Experimenting+with+AI...;Building+the+next+thing..." />
-</p>
-
-<table align="center">
-<tr>
-<td>
-
-```text
-AI / ML          ███████████████░░░  exploring
-DATA SCIENCE     ██████████████░░░░  building
-CYBERSECURITY    ████████████░░░░░░  learning
-DSA              ████████████████░░  practising
-DEVELOPMENT      ██████████████░░░░  experimenting
-```
-
-</td>
-</tr>
-</table>
-
----
-
-<h2 align="center">DSA</h2>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=java,c,python" height="45"/>
-</p>
-
-<p align="center">
-  <code>LeetCode → Java</code>
-  &nbsp;&nbsp;•&nbsp;&nbsp;
-  <code>GeeksforGeeks → C</code>
-  &nbsp;&nbsp;•&nbsp;&nbsp;
-  <code>CodeChef → Python</code>
-</p>
-
-<p align="center">
-  <a href="https://github.com/Adix10/DSA-Coding-Practice">
-    <img src="https://img.shields.io/badge/DSA%20CODING%20PRACTICE-111827?style=for-the-badge&logo=github&logoColor=white"/>
+  <a href="https://github.com/Adix10">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=2800&pause=900&color=38BDF8&center=true&vCenter=true&width=700&lines=AI+%7C+DATA+SCIENCE+%7C+CYBERSECURITY;BUILDING+PRACTICAL+TECH+SOLUTIONS;LEARNING.+BUILDING.+ITERATING." alt="Typing animation" />
   </a>
 </p>
 
 ---
 
-<h2 align="center">ACTIVITY MATRIX</h2>
+## ABOUT
+
+```text
+NAME       : Aditya Sharma
+EDUCATION  : B.Tech CSE (Data Science)
+INSTITUTE  : NMIMS MPSTME, Shirpur
+YEAR       : 2nd Year
+CGPA       : 8.58
+
+FOCUS      : Artificial Intelligence
+             Data Science
+             Cybersecurity
+             Software Development
+
+CURRENTLY  : Building practical projects
+             Strengthening DSA
+             Exploring AI & cybersecurity
+             Participating in hackathons
+```
+
+---
+
+## TECH STACK
+
+<p align="center">
+
+<img src="https://skillicons.dev/icons?i=c,cpp,java,python,html,css,js,react,nodejs,express,mongodb,git,github,vscode,tensorflow,opencv&perline=8" />
+
+</p>
+
+<p align="center">
+  <sub>
+    C • C++ • Java • Python • HTML • CSS • JavaScript • React • Node.js • Express • MongoDB • Git • GitHub • TensorFlow • OpenCV
+  </sub>
+</p>
+
+---
+
+## CURRENT STATE
+
+```text
+[ AI / ML          ]  ███████████████░░░  Exploring
+[ DATA SCIENCE     ]  ███████████████░░░  Building
+[ CYBERSECURITY    ]  ████████████░░░░░░  Learning
+[ WEB DEVELOPMENT  ]  █████████████░░░░░  Building
+[ DSA              ]  ███████████████░░░  Practicing
+[ HACKATHONS       ]  ████████████████░░  Active
+```
+
+---
+
+## DSA
+
+<p align="center">
+
+<a href="https://leetcode.com/">
+  <img src="https://img.shields.io/badge/LeetCode-Java-111827?style=for-the-badge&logo=leetcode&logoColor=FFA116" />
+</a>
+
+<a href="https://www.geeksforgeeks.org/">
+  <img src="https://img.shields.io/badge/GeeksforGeeks-C-111827?style=for-the-badge&logo=geeksforgeeks&logoColor=2F8D46" />
+</a>
+
+<a href="https://www.codechef.com/">
+  <img src="https://img.shields.io/badge/CodeChef-Python-111827?style=for-the-badge&logo=codechef&logoColor=5B4638" />
+</a>
+
+</p>
+
+```text
+LeetCode       -> Java
+GeeksforGeeks  -> C
+CodeChef       -> Python
+```
+
+---
+
+## ACTIVITY MATRIX
 
 <p align="center">
   <img src="./assets/activity-matrix.svg" width="100%" />
@@ -119,45 +101,24 @@ DEVELOPMENT      ██████████████░░░░  experim
 
 ---
 
-<h2 align="center">CONNECT</h2>
+## CONNECT
 
 <p align="center">
-  <a href="https://github.com/Adix10">
-    <img src="https://skillicons.dev/icons?i=github" height="50"/>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.linkedin.com/">
-    <img src="https://skillicons.dev/icons?i=linkedin" height="50"/>
-  </a>
-</p>
 
-<p align="center">
-  <code>connection.established()</code>
+<a href="https://github.com/Adix10">
+  <img src="https://img.shields.io/badge/GitHub-Adix10-111827?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+
+<a href="https://www.linkedin.com/">
+  <img src="https://img.shields.io/badge/LinkedIn-Aditya%20Sharma-111827?style=for-the-badge&logo=linkedin&logoColor=0A66C2" />
+</a>
+
 </p>
 
 ---
 
 <p align="center">
-  <sub>BUILD • LEARN • ANALYZE • SECURE • REPEAT</sub>
+  <sub>
+    SYSTEM ONLINE • BUILDING • LEARNING • EVOLVING
+  </sub>
 </p>
-```
-
-### Then save it
-
-In Notepad:
-
-**Ctrl + S**
-
-Your repo should now contain:
-
-```text
-Adix10
-│
-├── README.md
-│
-└── assets
-    ├── cyber-header.svg
-    └── activity-matrix.svg
-```
-
-After saving, **don't push yet**. Next we'll check the Git changes and commit both SVG assets + the README together.
