@@ -1,70 +1,69 @@
-<p align="center">
-  <img src="./assets/cyber-header.svg" width="100%" />
-</p>
+<div align="center">
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=17&duration=2800&pause=900&color=38BDF8&center=true&vCenter=true&width=720&lines=BUILDING+IDEAS+INTO+SYSTEMS;AI+%7C+DATA+SCIENCE+%7C+CYBERSECURITY;LEARNING.+BUILDING.+ITERATING." alt="System status" />
-</p>
+<img src="./assets/os/aditya-os.svg" width="100%">
 
 <br>
 
-<h3 align="center">CURRENTLY BUILDING</h3>
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=16&duration=2800&pause=900&color=67E8F9&center=true&vCenter=true&width=650&lines=Initializing+Aditya+OS...;AI+%7C+Data+Science+%7C+Web+%7C+Cybersecurity;Building+systems.+Learning+continuously.;System+ready.">
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=15&duration=2400&pause=700&color=7DD3FC&center=true&vCenter=true&width=680&lines=Exploring+Artificial+Intelligence;Strengthening+Data+Science;Learning+Cybersecurity;Building+Web+%26+AI+Systems;Participating+in+Hackathons" alt="Current focus" />
-</p>
+</div>
 
 <br>
 
-<h3 align="center">TECH STACK</h3>
+## ABOUT
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=c,cpp,java,python,html,css,js,react,nodejs,flutter,mysql,git,github,vscode&perline=7" />
-</p>
-
-<p align="center">
-  <img src="https://cdn.simpleicons.org/pandas/38BDF8" height="42" />
-  &nbsp;
-  <img src="https://cdn.simpleicons.org/matplotlib/38BDF8" height="42" />
-  &nbsp;
-  <img src="https://cdn.simpleicons.org/jupyter/38BDF8" height="42" />
-</p>
-
-<p align="center">
-  <sub>
-    C &nbsp;•&nbsp; C++ &nbsp;•&nbsp; Java &nbsp;•&nbsp; Python &nbsp;•&nbsp; HTML &nbsp;•&nbsp; CSS &nbsp;•&nbsp; JavaScript &nbsp;•&nbsp; React &nbsp;•&nbsp; Node.js
-    <br>
-    Flutter &nbsp;•&nbsp; Pandas &nbsp;•&nbsp; Matplotlib &nbsp;•&nbsp; Jupyter Notebook &nbsp;•&nbsp; MySQL &nbsp;•&nbsp; Git &nbsp;•&nbsp; GitHub &nbsp;•&nbsp; VS Code
-  </sub>
-</p>
+> CSE & Data Science student building practical systems with **AI, data, web technologies and cybersecurity**.
+> I like turning ideas into working projects and learning by building.
 
 <br>
 
-<h3 align="center">CONNECT</h3>
+## TECH STACK
 
-<p align="center">
-  <a href="https://github.com/Adix10">
-    <img src="https://img.shields.io/badge/GitHub-Adix10-111827?style=for-the-badge&logo=github&logoColor=white" />
-  </a>
-  <a href="https://www.linkedin.com/">
-    <img src="https://img.shields.io/badge/LinkedIn-Aditya%20Sharma-111827?style=for-the-badge&logo=linkedin&logoColor=0A66C2" />
-  </a>
-</p>
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=c,cpp,java,python,html,css,js,react,nodejs,flutter,mysql,git,github,vscode&perline=7" alt="Tech Stack">
+
+</div>
 
 <br>
 
-<h3 align="center">CONTRIBUTION BREAKER</h3>
+## CURRENT SIGNAL
 
-<p align="center">
-  <sub>BREAK THE BLOCKS &nbsp;•&nbsp; BUILD THE STREAK</sub>
-</p>
+<div align="center">
 
-<p align="center">
-  <img src="./assets/activity-matrix.svg" width="100%" />
-</p>
+<img src="https://img.shields.io/badge/AI%20SYSTEM-ACTIVE-07111B?style=for-the-badge&logoColor=67E8F9">
+<img src="https://img.shields.io/badge/DATA%20SCIENCE-ACTIVE-07111B?style=for-the-badge&logoColor=67E8F9">
+<img src="https://img.shields.io/badge/WEB-BUILDING-07111B?style=for-the-badge&logoColor=818CF8">
+<img src="https://img.shields.io/badge/CYBERSECURITY-EXPLORING-07111B?style=for-the-badge&logoColor=C084FC">
+
+</div>
 
 <br>
 
-<p align="center">
-  <sub>SYSTEM ONLINE &nbsp;•&nbsp; ADITYA.SHARMA</sub>
-</p>
+<div align="center">
+
+<a href="mailto:aadityasharma1045@gmail.com">
+<img src="https://img.shields.io/badge/EMAIL-CONTACT-050C14?style=for-the-badge&logo=gmail&logoColor=67E8F9">
+</a>
+
+ 
+
+<a href="https://github.com/Adix10">
+<img src="https://img.shields.io/badge/GITHUB-ADIX10-050C14?style=for-the-badge&logo=github&logoColor=67E8F9">
+</a>
+
+ 
+
+<a href="https://www.linkedin.com/in/aditya-sharma-b962613a2/">
+<img src="https://img.shields.io/badge/LINKEDIN-CONNECT-050C14?style=for-the-badge&logo=linkedin&logoColor=67E8F9">
+</a>
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=12&duration=3500&pause=1200&color=64748B&center=true&vCenter=true&width=700&lines=ADITYA+OS+v1.0+%7C+KERNEL+01+%7C+SYSTEM+READY;BUILD+%7C+LEARN+%7C+DEPLOY">
+
+</div>

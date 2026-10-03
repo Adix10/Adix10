@@ -1,0 +1,1692 @@
+<svg width="1400" height="760" viewBox="0 0 1400 760"
+xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+  <!-- BACKGROUND -->
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#020409"/>
+    <stop offset=".45" stop-color="#07111b"/>
+    <stop offset="1" stop-color="#0b0614"/>
+  </linearGradient>
+
+  <radialGradient id="core">
+    <stop offset="0" stop-color="#22d3ee" stop-opacity=".18"/>
+    <stop offset=".45" stop-color="#2563eb" stop-opacity=".07"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0"/>
+  </radialGradient>
+
+  <linearGradient id="cyan" x1="0" x2="1">
+    <stop stop-color="#22d3ee"/>
+    <stop offset="1" stop-color="#60a5fa"/>
+  </linearGradient>
+
+  <linearGradient id="violet" x1="0" x2="1">
+    <stop stop-color="#818cf8"/>
+    <stop offset="1" stop-color="#c084fc"/>
+  </linearGradient>
+
+  <!-- GRID -->
+  <pattern id="grid" width="35" height="35"
+  patternUnits="userSpaceOnUse">
+    <path d="M35 0H0V35"
+    fill="none"
+    stroke="#38bdf8"
+    stroke-opacity=".055"/>
+  </pattern>
+
+  <!-- SCANLINES -->
+  <pattern id="scan" width="4" height="8"
+  patternUnits="userSpaceOnUse">
+    <rect width="4" height="1"
+    fill="#fff"
+    opacity=".025"/>
+  </pattern>
+
+  <!-- GLOW -->
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="3" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+
+  <filter id="bigGlow">
+    <feGaussianBlur stdDeviation="15"/>
+  </filter>
+
+
+  <!-- ================================================= -->
+  <!-- ANIMATIONS -->
+  <!-- ================================================= -->
+
+  <style>
+
+    .mono {
+      font-family: monospace;
+    }
+
+    .title {
+      font-family: monospace;
+      font-size: 30px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      fill: #e0f2fe;
+    }
+
+    .label {
+      font-family: monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      fill: #64748b;
+    }
+
+    .cyan {
+      font-family: monospace;
+      fill: #67e8f9;
+    }
+
+    .white {
+      font-family: monospace;
+      fill: #e2e8f0;
+    }
+
+    .violet {
+      font-family: monospace;
+      fill: #c4b5fd;
+    }
+
+    .panel {
+      fill: #050c14;
+      stroke: #164e63;
+      stroke-width: 1;
+    }
+
+
+    /* PULSES */
+
+    .pulse {
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .pulse2 {
+      animation: pulse 2.7s ease-in-out infinite;
+    }
+
+    .blink {
+      animation: blink 1.2s steps(2) infinite;
+    }
+
+
+    /* ================================================= */
+    /* DIGITAL RAIN */
+    /* ================================================= */
+
+    .rainA {
+      animation: fallA 5s linear infinite;
+    }
+
+    .rainB {
+      animation: fallB 7s linear infinite;
+    }
+
+    .rainC {
+      animation: fallC 4.5s linear infinite;
+    }
+
+    .rainD {
+      animation: fallD 6.5s linear infinite;
+    }
+
+    .rainE {
+      animation: fallE 8s linear infinite;
+    }
+
+    .rainF {
+      animation: fallF 5.8s linear infinite;
+    }
+
+
+    /* ================================================= */
+    /* ONE-TIME NAME GLITCH */
+    /* ================================================= */
+
+    .nameBase {
+      animation: nameStable 8s linear 1;
+    }
+
+    .nameGlitch1 {
+      animation: nameGlitch1 8s linear 1;
+    }
+
+    .nameGlitch2 {
+      animation: nameGlitch2 8s linear 1;
+    }
+
+
+    /* PACKETS */
+
+    .packet {
+      animation: packet 3s linear infinite;
+    }
+
+    .packet2 {
+      animation: packet2 4s linear infinite;
+    }
+
+
+    /* BOOT */
+
+    .boot {
+      animation: boot 1.5s ease-out both;
+    }
+
+
+    /* SCAN */
+
+    .scanbeam {
+      animation: scanbeam 5s linear infinite;
+    }
+
+
+    /* ================================================= */
+    /* KEYFRAMES */
+    /* ================================================= */
+
+    @keyframes pulse {
+
+      0%,100% {
+        opacity:.35;
+      }
+
+      50% {
+        opacity:1;
+      }
+
+    }
+
+
+    @keyframes blink {
+
+      0%,50% {
+        opacity:1;
+      }
+
+      51%,100% {
+        opacity:.15;
+      }
+
+    }
+
+
+    /* FULL BACKGROUND FALLING STREAMS */
+
+    @keyframes fallA {
+
+      0% {
+        transform:translateY(-760px);
+        opacity:0;
+      }
+
+      8% {
+        opacity:.65;
+      }
+
+      50% {
+        opacity:.8;
+      }
+
+      92% {
+        opacity:.5;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes fallB {
+
+      0% {
+        transform:translateY(-900px);
+        opacity:0;
+      }
+
+      10% {
+        opacity:.45;
+      }
+
+      55% {
+        opacity:.65;
+      }
+
+      90% {
+        opacity:.35;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes fallC {
+
+      0% {
+        transform:translateY(-650px);
+        opacity:0;
+      }
+
+      7% {
+        opacity:.7;
+      }
+
+      48% {
+        opacity:.85;
+      }
+
+      92% {
+        opacity:.45;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes fallD {
+
+      0% {
+        transform:translateY(-1000px);
+        opacity:0;
+      }
+
+      12% {
+        opacity:.4;
+      }
+
+      55% {
+        opacity:.65;
+      }
+
+      90% {
+        opacity:.35;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes fallE {
+
+      0% {
+        transform:translateY(-850px);
+        opacity:0;
+      }
+
+      10% {
+        opacity:.35;
+      }
+
+      50% {
+        opacity:.55;
+      }
+
+      92% {
+        opacity:.3;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes fallF {
+
+      0% {
+        transform:translateY(-720px);
+        opacity:0;
+      }
+
+      8% {
+        opacity:.5;
+      }
+
+      50% {
+        opacity:.7;
+      }
+
+      90% {
+        opacity:.35;
+      }
+
+      100% {
+        transform:translateY(760px);
+        opacity:0;
+      }
+
+    }
+
+
+    /* NAME GLITCH HAPPENS ONLY ONCE */
+
+    @keyframes nameStable {
+
+      0%,48% {
+        opacity:1;
+      }
+
+      49% {
+        opacity:.2;
+      }
+
+      50% {
+        opacity:1;
+      }
+
+      51% {
+        opacity:.3;
+      }
+
+      52%,100% {
+        opacity:1;
+      }
+
+    }
+
+
+    @keyframes nameGlitch1 {
+
+      0%,48% {
+        opacity:0;
+        transform:translate(0);
+      }
+
+      49% {
+        opacity:.9;
+        transform:translate(-5px,0);
+      }
+
+      50% {
+        opacity:0;
+        transform:translate(5px,0);
+      }
+
+      51% {
+        opacity:.7;
+        transform:translate(-3px,0);
+      }
+
+      52%,100% {
+        opacity:0;
+        transform:translate(0);
+      }
+
+    }
+
+
+    @keyframes nameGlitch2 {
+
+      0%,49% {
+        opacity:0;
+        transform:translate(0);
+      }
+
+      50% {
+        opacity:.65;
+        transform:translate(6px,1px);
+      }
+
+      51% {
+        opacity:0;
+        transform:translate(-5px,0);
+      }
+
+      52%,100% {
+        opacity:0;
+        transform:translate(0);
+      }
+
+    }
+
+
+    @keyframes packet {
+
+      0% {
+        transform:translate(0,0);
+        opacity:0;
+      }
+
+      10% {
+        opacity:1;
+      }
+
+      50% {
+        opacity:1;
+      }
+
+      100% {
+        transform:translate(125px,80px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes packet2 {
+
+      0% {
+        transform:translate(0,0);
+        opacity:0;
+      }
+
+      15% {
+        opacity:1;
+      }
+
+      60% {
+        opacity:1;
+      }
+
+      100% {
+        transform:translate(-110px,100px);
+        opacity:0;
+      }
+
+    }
+
+
+    @keyframes boot {
+
+      0% {
+        opacity:0;
+        transform:translateY(18px);
+      }
+
+      100% {
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+
+    @keyframes scanbeam {
+
+      0% {
+        transform:translateY(-40px);
+        opacity:0;
+      }
+
+      10% {
+        opacity:.35;
+      }
+
+      90% {
+        opacity:.35;
+      }
+
+      100% {
+        transform:translateY(800px);
+        opacity:0;
+      }
+
+    }
+
+  </style>
+
+</defs>
+
+
+<!-- ===================================================== -->
+<!-- BACKGROUND -->
+<!-- ===================================================== -->
+
+<rect width="1400"
+height="760"
+rx="20"
+fill="url(#bg)"/>
+
+<rect width="1400"
+height="760"
+rx="20"
+fill="url(#grid)"/>
+
+<rect width="1400"
+height="760"
+rx="20"
+fill="url(#scan)"/>
+
+
+<!-- CENTRAL GLOW -->
+
+<circle cx="1020"
+cy="350"
+r="330"
+fill="url(#core)"/>
+
+<circle cx="1020"
+cy="350"
+r="170"
+fill="#22d3ee"
+opacity=".04"
+filter="url(#bigGlow)"/>
+
+
+<!-- ===================================================== -->
+<!-- FULL BACKGROUND ENCRYPTED RAIN -->
+<!-- ===================================================== -->
+
+<g
+font-family="monospace"
+font-size="12"
+font-weight="bold">
+
+
+  <!-- COLUMN 1 -->
+
+  <g class="rainA" fill="#22d3ee">
+    <text x="45" y="0">101001</text>
+    <text x="45" y="28">0x7F</text>
+    <text x="45" y="56">010110</text>
+    <text x="45" y="84">AI01</text>
+    <text x="45" y="112">110101</text>
+    <text x="45" y="140">NULL</text>
+    <text x="45" y="168">011001</text>
+    <text x="45" y="196">0xA7</text>
+    <text x="45" y="224">101110</text>
+    <text x="45" y="252">SYS</text>
+    <text x="45" y="280">010011</text>
+    <text x="45" y="308">110010</text>
+    <text x="45" y="336">0x3F</text>
+    <text x="45" y="364">101001</text>
+    <text x="45" y="392">DATA</text>
+    <text x="45" y="420">011110</text>
+    <text x="45" y="448">AI01</text>
+    <text x="45" y="476">110101</text>
+    <text x="45" y="504">0x9C</text>
+    <text x="45" y="532">001101</text>
+    <text x="45" y="560">SEC</text>
+    <text x="45" y="588">101010</text>
+    <text x="45" y="616">0xF1</text>
+    <text x="45" y="644">011001</text>
+    <text x="45" y="672">010101</text>
+    <text x="45" y="700">SYS</text>
+  </g>
+
+
+  <!-- COLUMN 2 -->
+
+  <g class="rainC" fill="#67e8f9">
+    <text x="170" y="0">010101</text>
+    <text x="170" y="30">0x4A</text>
+    <text x="170" y="60">110011</text>
+    <text x="170" y="90">NET</text>
+    <text x="170" y="120">101101</text>
+    <text x="170" y="150">0xB2</text>
+    <text x="170" y="180">001110</text>
+    <text x="170" y="210">AI</text>
+    <text x="170" y="240">111000</text>
+    <text x="170" y="270">0x7D</text>
+    <text x="170" y="300">010101</text>
+    <text x="170" y="330">CORE</text>
+    <text x="170" y="360">101011</text>
+    <text x="170" y="390">0xE1</text>
+    <text x="170" y="420">011010</text>
+    <text x="170" y="450">NULL</text>
+    <text x="170" y="480">100101</text>
+    <text x="170" y="510">0x2F</text>
+    <text x="170" y="540">010011</text>
+    <text x="170" y="570">DATA</text>
+    <text x="170" y="600">111010</text>
+    <text x="170" y="630">0xA1</text>
+    <text x="170" y="660">001101</text>
+    <text x="170" y="690">CYBER</text>
+    <text x="170" y="720">101010</text>
+  </g>
+
+
+  <!-- COLUMN 3 -->
+
+  <g class="rainB" fill="#818cf8">
+    <text x="300" y="0">110010</text>
+    <text x="300" y="28">0x91</text>
+    <text x="300" y="56">101001</text>
+    <text x="300" y="84">SYS</text>
+    <text x="300" y="112">011101</text>
+    <text x="300" y="140">0xAF</text>
+    <text x="300" y="168">110101</text>
+    <text x="300" y="196">AI01</text>
+    <text x="300" y="224">010010</text>
+    <text x="300" y="252">NULL</text>
+    <text x="300" y="280">111001</text>
+    <text x="300" y="308">0x3C</text>
+    <text x="300" y="336">010101</text>
+    <text x="300" y="364">DATA</text>
+    <text x="300" y="392">101100</text>
+    <text x="300" y="420">0xD7</text>
+    <text x="300" y="448">011011</text>
+    <text x="300" y="476">CORE</text>
+    <text x="300" y="504">110100</text>
+    <text x="300" y="532">0x81</text>
+    <text x="300" y="560">001101</text>
+    <text x="300" y="588">SEC</text>
+    <text x="300" y="616">101010</text>
+    <text x="300" y="644">0xFA</text>
+    <text x="300" y="672">011100</text>
+    <text x="300" y="700">NET</text>
+  </g>
+
+
+  <!-- COLUMN 4 -->
+
+  <g class="rainD" fill="#22d3ee">
+    <text x="435" y="0">011010</text>
+    <text x="435" y="30">0xC4</text>
+    <text x="435" y="60">101101</text>
+    <text x="435" y="90">AI</text>
+    <text x="435" y="120">110011</text>
+    <text x="435" y="150">0x71</text>
+    <text x="435" y="180">010110</text>
+    <text x="435" y="210">SYS</text>
+    <text x="435" y="240">111001</text>
+    <text x="435" y="270">0xE8</text>
+    <text x="435" y="300">001011</text>
+    <text x="435" y="330">NULL</text>
+    <text x="435" y="360">101010</text>
+    <text x="435" y="390">DATA</text>
+    <text x="435" y="420">011101</text>
+    <text x="435" y="450">0xA9</text>
+    <text x="435" y="480">110010</text>
+    <text x="435" y="510">CORE</text>
+    <text x="435" y="540">001101</text>
+    <text x="435" y="570">0x4F</text>
+    <text x="435" y="600">101001</text>
+    <text x="435" y="630">SEC</text>
+    <text x="435" y="660">010110</text>
+    <text x="435" y="690">AI01</text>
+    <text x="435" y="720">110101</text>
+  </g>
+
+
+  <!-- COLUMN 5 -->
+
+  <g class="rainE" fill="#c084fc">
+    <text x="575" y="0">101101</text>
+    <text x="575" y="28">0x5E</text>
+    <text x="575" y="56">010010</text>
+    <text x="575" y="84">CYBER</text>
+    <text x="575" y="112">111001</text>
+    <text x="575" y="140">0xB7</text>
+    <text x="575" y="168">001101</text>
+    <text x="575" y="196">DATA</text>
+    <text x="575" y="224">110010</text>
+    <text x="575" y="252">SYS</text>
+    <text x="575" y="280">101011</text>
+    <text x="575" y="308">0x91</text>
+    <text x="575" y="336">011010</text>
+    <text x="575" y="364">NULL</text>
+    <text x="575" y="392">100101</text>
+    <text x="575" y="420">AI01</text>
+    <text x="575" y="448">011110</text>
+    <text x="575" y="476">0xC8</text>
+    <text x="575" y="504">101010</text>
+    <text x="575" y="532">CORE</text>
+    <text x="575" y="560">001111</text>
+    <text x="575" y="588">SEC</text>
+    <text x="575" y="616">110101</text>
+    <text x="575" y="644">0x2A</text>
+    <text x="575" y="672">010011</text>
+    <text x="575" y="700">NET</text>
+  </g>
+
+
+  <!-- COLUMN 6 -->
+
+  <g class="rainF" fill="#67e8f9">
+    <text x="710" y="0">010101</text>
+    <text x="710" y="30">0xD1</text>
+    <text x="710" y="60">101010</text>
+    <text x="710" y="90">SYS</text>
+    <text x="710" y="120">001101</text>
+    <text x="710" y="150">0x7A</text>
+    <text x="710" y="180">110011</text>
+    <text x="710" y="210">AI01</text>
+    <text x="710" y="240">011001</text>
+    <text x="710" y="270">NULL</text>
+    <text x="710" y="300">101101</text>
+    <text x="710" y="330">0xF4</text>
+    <text x="710" y="360">010010</text>
+    <text x="710" y="390">DATA</text>
+    <text x="710" y="420">111001</text>
+    <text x="710" y="450">0x3D</text>
+    <text x="710" y="480">001101</text>
+    <text x="710" y="510">CORE</text>
+    <text x="710" y="540">110101</text>
+    <text x="710" y="570">SEC</text>
+    <text x="710" y="600">010110</text>
+    <text x="710" y="630">0xA2</text>
+    <text x="710" y="660">101011</text>
+    <text x="710" y="690">NET</text>
+    <text x="710" y="720">011010</text>
+  </g>
+
+
+  <!-- COLUMN 7 -->
+
+  <g class="rainC" fill="#22d3ee">
+    <text x="850" y="0">110101</text>
+    <text x="850" y="28">0x81</text>
+    <text x="850" y="56">001011</text>
+    <text x="850" y="84">AI</text>
+    <text x="850" y="112">101110</text>
+    <text x="850" y="140">0xC7</text>
+    <text x="850" y="168">010011</text>
+    <text x="850" y="196">SYS</text>
+    <text x="850" y="224">111010</text>
+    <text x="850" y="252">NULL</text>
+    <text x="850" y="280">001101</text>
+    <text x="850" y="308">0xA4</text>
+    <text x="850" y="336">101010</text>
+    <text x="850" y="364">DATA</text>
+    <text x="850" y="392">011101</text>
+    <text x="850" y="420">CORE</text>
+    <text x="850" y="448">110010</text>
+    <text x="850" y="476">0x5F</text>
+    <text x="850" y="504">001101</text>
+    <text x="850" y="532">SEC</text>
+    <text x="850" y="560">101101</text>
+    <text x="850" y="588">AI01</text>
+    <text x="850" y="616">010010</text>
+    <text x="850" y="644">0xE2</text>
+    <text x="850" y="672">111001</text>
+    <text x="850" y="700">NET</text>
+  </g>
+
+
+  <!-- COLUMN 8 -->
+
+  <g class="rainB" fill="#818cf8">
+    <text x="1000" y="0">101001</text>
+    <text x="1000" y="30">0x4C</text>
+    <text x="1000" y="60">010110</text>
+    <text x="1000" y="90">CYBER</text>
+    <text x="1000" y="120">111010</text>
+    <text x="1000" y="150">0x9A</text>
+    <text x="1000" y="180">001101</text>
+    <text x="1000" y="210">DATA</text>
+    <text x="1000" y="240">101101</text>
+    <text x="1000" y="270">SYS</text>
+    <text x="1000" y="300">010011</text>
+    <text x="1000" y="330">0xD3</text>
+    <text x="1000" y="360">110101</text>
+    <text x="1000" y="390">AI01</text>
+    <text x="1000" y="420">001110</text>
+    <text x="1000" y="450">NULL</text>
+    <text x="1000" y="480">101010</text>
+    <text x="1000" y="510">0x7B</text>
+    <text x="1000" y="540">011001</text>
+    <text x="1000" y="570">CORE</text>
+    <text x="1000" y="600">110010</text>
+    <text x="1000" y="630">SEC</text>
+    <text x="1000" y="660">010101</text>
+    <text x="1000" y="690">0xF8</text>
+    <text x="1000" y="720">101101</text>
+  </g>
+
+
+  <!-- COLUMN 9 -->
+
+  <g class="rainD" fill="#c084fc">
+    <text x="1140" y="0">011001</text>
+    <text x="1140" y="28">0xA1</text>
+    <text x="1140" y="56">110101</text>
+    <text x="1140" y="84">SYS</text>
+    <text x="1140" y="112">101010</text>
+    <text x="1140" y="140">0x3E</text>
+    <text x="1140" y="168">001101</text>
+    <text x="1140" y="196">AI</text>
+    <text x="1140" y="224">111001</text>
+    <text x="1140" y="252">NULL</text>
+    <text x="1140" y="280">010110</text>
+    <text x="1140" y="308">0xD7</text>
+    <text x="1140" y="336">101101</text>
+    <text x="1140" y="364">DATA</text>
+    <text x="1140" y="392">011010</text>
+    <text x="1140" y="420">CORE</text>
+    <text x="1140" y="448">110010</text>
+    <text x="1140" y="476">0x81</text>
+    <text x="1140" y="504">001101</text>
+    <text x="1140" y="532">SEC</text>
+    <text x="1140" y="560">101010</text>
+    <text x="1140" y="588">AI01</text>
+    <text x="1140" y="616">011101</text>
+    <text x="1140" y="644">0xC4</text>
+    <text x="1140" y="672">110101</text>
+    <text x="1140" y="700">NET</text>
+  </g>
+
+
+  <!-- COLUMN 10 -->
+
+  <g class="rainA" fill="#22d3ee">
+    <text x="1280" y="0">110010</text>
+    <text x="1280" y="30">0xF2</text>
+    <text x="1280" y="60">001101</text>
+    <text x="1280" y="90">CYBER</text>
+    <text x="1280" y="120">101011</text>
+    <text x="1280" y="150">0x7C</text>
+    <text x="1280" y="180">010110</text>
+    <text x="1280" y="210">DATA</text>
+    <text x="1280" y="240">111001</text>
+    <text x="1280" y="270">SYS</text>
+    <text x="1280" y="300">101101</text>
+    <text x="1280" y="330">0xA8</text>
+    <text x="1280" y="360">011010</text>
+    <text x="1280" y="390">AI01</text>
+    <text x="1280" y="420">110101</text>
+    <text x="1280" y="450">NULL</text>
+    <text x="1280" y="480">001101</text>
+    <text x="1280" y="510">0x4F</text>
+    <text x="1280" y="540">101010</text>
+    <text x="1280" y="570">CORE</text>
+    <text x="1280" y="600">010011</text>
+    <text x="1280" y="630">SEC</text>
+    <text x="1280" y="660">111010</text>
+    <text x="1280" y="690">0x91</text>
+    <text x="1280" y="720">101001</text>
+  </g>
+
+</g>
+
+
+<!-- ===================================================== -->
+<!-- OUTER FRAME -->
+<!-- ===================================================== -->
+
+<rect x="12" y="12"
+width="1376"
+height="736"
+rx="18"
+fill="none"
+stroke="#164e63"/>
+
+<rect x="17" y="17"
+width="1366"
+height="726"
+rx="15"
+fill="none"
+stroke="#0ea5e9"
+stroke-opacity=".16"/>
+
+
+<!-- ===================================================== -->
+<!-- TOP BAR -->
+<!-- ===================================================== -->
+
+<rect x="30" y="30"
+width="1340"
+height="70"
+rx="10"
+class="panel"/>
+
+<circle cx="58"
+cy="65"
+r="7"
+fill="#22d3ee"
+filter="url(#glow)"
+class="pulse"/>
+
+<text x="80"
+y="73"
+class="title">
+ADITYA OS
+</text>
+
+<text x="350"
+y="72"
+class="label">
+KERNEL 01
+</text>
+
+<line x1="470"
+y1="52"
+x2="470"
+y2="80"
+stroke="#164e63"/>
+
+<text x="500"
+y="72"
+class="cyan"
+font-size="13">
+PERSONAL DEVELOPER SYSTEM
+</text>
+
+<text x="1335"
+y="58"
+text-anchor="end"
+class="label">
+SYSTEM STATUS
+</text>
+
+<circle cx="1290"
+cy="78"
+r="4"
+fill="#22d3ee"
+class="blink"/>
+
+<text x="1335"
+y="82"
+text-anchor="end"
+class="cyan"
+font-size="12">
+ONLINE
+</text>
+
+
+<!-- ===================================================== -->
+<!-- TERMINAL -->
+<!-- ===================================================== -->
+
+<g class="boot">
+
+<text x="40"
+y="135"
+class="label">
+TERMINAL
+</text>
+
+<text x="40"
+y="163"
+class="cyan"
+font-size="14">
+aditya@os:~$
+</text>
+
+<text x="170"
+y="163"
+class="white"
+font-size="14">
+./initialize
+</text>
+
+<text x="40"
+y="188"
+class="mono"
+font-size="13"
+fill="#64748b">
+loading neural core...
+</text>
+
+<text x="245"
+y="188"
+class="cyan"
+font-size="13">
+OK
+</text>
+
+<text x="285"
+y="188"
+class="mono"
+font-size="13"
+fill="#64748b">
+connecting github...
+</text>
+
+<text x="490"
+y="188"
+class="cyan"
+font-size="13">
+OK
+</text>
+
+<text x="530"
+y="188"
+class="mono"
+font-size="13"
+fill="#64748b">
+security layer...
+</text>
+
+<text x="690"
+y="188"
+class="cyan"
+font-size="13">
+ACTIVE
+</text>
+
+</g>
+
+
+<!-- ===================================================== -->
+<!-- IDENTITY PANEL -->
+<!-- ===================================================== -->
+
+<rect x="35"
+y="215"
+width="420"
+height="250"
+rx="12"
+class="panel"/>
+
+<text x="58"
+y="246"
+class="cyan"
+font-size="13">
+IDENTITY
+</text>
+
+<line x1="58"
+y1="260"
+x2="432"
+y2="260"
+stroke="#164e63"/>
+
+
+<!-- NAME -->
+
+<g class="nameBase">
+
+<text x="58"
+y="302"
+class="white"
+font-size="25"
+font-weight="bold">
+ADITYA SHARMA
+</text>
+
+</g>
+
+
+<!-- GLITCH COPIES -->
+
+<text x="58"
+y="302"
+class="cyan nameGlitch1"
+font-size="25"
+font-weight="bold">
+ADITYA SHARMA
+</text>
+
+<text x="58"
+y="302"
+class="violet nameGlitch2"
+font-size="25"
+font-weight="bold">
+ADITYA SHARMA
+</text>
+
+
+<text x="58"
+y="330"
+class="label">
+CSE • DATA SCIENCE
+</text>
+
+<text x="58"
+y="357"
+class="cyan"
+font-size="13">
+AI
+</text>
+
+<text x="90"
+y="357"
+class="label">
+•
+</text>
+
+<text x="110"
+y="357"
+class="cyan"
+font-size="13">
+DATA
+</text>
+
+<text x="155"
+y="357"
+class="label">
+•
+</text>
+
+<text x="175"
+y="357"
+class="violet"
+font-size="13">
+CYBERSECURITY
+</text>
+
+<text x="58"
+y="400"
+class="label">
+USER
+</text>
+
+<text x="125"
+y="400"
+class="white"
+font-size="13">
+ADIX10
+</text>
+
+<text x="58"
+y="425"
+class="label">
+MODE
+</text>
+
+<text x="125"
+y="425"
+class="cyan"
+font-size="13">
+BUILD • LEARN • DEPLOY
+</text>
+
+<text x="58"
+y="449"
+class="label">
+SIGNAL
+</text>
+
+<text x="125"
+y="449"
+class="cyan"
+font-size="12">
+STABLE
+</text>
+
+
+<!-- ===================================================== -->
+<!-- SYSTEM CORE -->
+<!-- ===================================================== -->
+
+<rect x="475"
+y="215"
+width="390"
+height="250"
+rx="12"
+class="panel"/>
+
+<text x="498"
+y="246"
+class="violet"
+font-size="13">
+SYSTEM CORE
+</text>
+
+<line x1="498"
+y1="260"
+x2="842"
+y2="260"
+stroke="#164e63"/>
+
+
+<text x="498"
+y="296"
+class="label">
+AI CORE
+</text>
+
+<rect x="590"
+y="286"
+width="230"
+height="7"
+rx="4"
+fill="#0f172a"/>
+
+<rect x="590"
+y="286"
+width="195"
+height="7"
+rx="4"
+fill="url(#cyan)"
+class="pulse"/>
+
+
+<text x="498"
+y="333"
+class="label">
+DATA CORE
+</text>
+
+<rect x="590"
+y="323"
+width="230"
+height="7"
+rx="4"
+fill="#0f172a"/>
+
+<rect x="590"
+y="323"
+width="180"
+height="7"
+rx="4"
+fill="url(#cyan)"
+class="pulse2"/>
+
+
+<text x="498"
+y="370"
+class="label">
+WEB STACK
+</text>
+
+<rect x="590"
+y="360"
+width="230"
+height="7"
+rx="4"
+fill="#0f172a"/>
+
+<rect x="590"
+y="360"
+width="165"
+height="7"
+rx="4"
+fill="url(#violet)"/>
+
+
+<text x="498"
+y="407"
+class="label">
+SECURITY
+</text>
+
+<rect x="590"
+y="397"
+width="230"
+height="7"
+rx="4"
+fill="#0f172a"/>
+
+<rect x="590"
+y="397"
+width="150"
+height="7"
+rx="4"
+fill="url(#violet)"
+class="pulse"/>
+
+<text x="498"
+y="442"
+class="cyan"
+font-size="11">
+SYSTEMS OPERATIONAL
+</text>
+
+
+<!-- ===================================================== -->
+<!-- NEURAL GRID -->
+<!-- ===================================================== -->
+
+<rect x="885"
+y="125"
+width="480"
+height="340"
+rx="12"
+class="panel"/>
+
+<text x="910"
+y="155"
+class="cyan"
+font-size="13">
+NEURAL GRID
+</text>
+
+<text x="1340"
+y="155"
+text-anchor="end"
+class="label">
+LOCAL NETWORK
+</text>
+
+<line x1="910"
+y1="170"
+x2="1340"
+y2="170"
+stroke="#164e63"/>
+
+
+<g fill="none"
+stroke="#164e63"
+stroke-width="2">
+
+<path d="M980 240 L1110 195 L1250 245 L1170 335 L1010 330 Z"/>
+
+<path d="M980 240 L1170 335"/>
+
+<path d="M1110 195 L1010 330"/>
+
+<path d="M1250 245 L1010 330"/>
+
+</g>
+
+
+<g class="pulse">
+
+<circle cx="980"
+cy="240"
+r="9"
+fill="#22d3ee"
+filter="url(#glow)"/>
+
+<circle cx="1110"
+cy="195"
+r="9"
+fill="#818cf8"
+filter="url(#glow)"/>
+
+<circle cx="1250"
+cy="245"
+r="9"
+fill="#22d3ee"
+filter="url(#glow)"/>
+
+<circle cx="1170"
+cy="335"
+r="9"
+fill="#c084fc"
+filter="url(#glow)"/>
+
+<circle cx="1010"
+cy="330"
+r="9"
+fill="#22d3ee"
+filter="url(#glow)"/>
+
+</g>
+
+
+<circle cx="980"
+cy="240"
+r="4"
+fill="#fff"
+class="packet"/>
+
+<circle cx="1250"
+cy="245"
+r="4"
+fill="#fff"
+class="packet2"/>
+
+
+<text x="910"
+y="390"
+class="label">
+ACTIVE NODES
+</text>
+
+<text x="910"
+y="418"
+class="cyan"
+font-size="13">
+AI
+</text>
+
+<text x="960"
+y="418"
+class="cyan"
+font-size="13">
+DATA
+</text>
+
+<text x="1030"
+y="418"
+class="violet"
+font-size="13">
+WEB
+</text>
+
+<text x="1085"
+y="418"
+class="violet"
+font-size="13">
+CYBER
+</text>
+
+
+<!-- ===================================================== -->
+<!-- ACTIVE MODULES -->
+<!-- ===================================================== -->
+
+<rect x="35"
+y="490"
+width="830"
+height="210"
+rx="12"
+class="panel"/>
+
+<text x="58"
+y="520"
+class="cyan"
+font-size="13">
+ACTIVE MODULES
+</text>
+
+<text x="840"
+y="520"
+text-anchor="end"
+class="label">
+SYSTEM FOCUS
+</text>
+
+<line x1="58"
+y1="535"
+x2="840"
+y2="535"
+stroke="#164e63"/>
+
+
+<text x="58"
+y="562"
+class="label">
+MODULE
+</text>
+
+<text x="500"
+y="562"
+class="label">
+STATUS
+</text>
+
+
+<!-- AI SYSTEM -->
+
+<text x="58"
+y="585"
+class="white"
+font-size="12">
+AI SYSTEM
+</text>
+
+<text x="500"
+y="585"
+class="cyan"
+font-size="12">
+ACTIVE
+</text>
+
+
+<!-- DATA SCIENCE -->
+
+<text x="58"
+y="618"
+class="white"
+font-size="12">
+DATA SCIENCE
+</text>
+
+<text x="500"
+y="618"
+class="cyan"
+font-size="12">
+ACTIVE
+</text>
+
+
+<!-- WEB DEVELOPMENT -->
+
+<text x="58"
+y="651"
+class="white"
+font-size="12">
+WEB DEVELOPMENT
+</text>
+
+<text x="500"
+y="651"
+class="cyan"
+font-size="12">
+BUILDING
+</text>
+
+
+<!-- CYBERSECURITY -->
+
+<text x="58"
+y="684"
+class="white"
+font-size="12">
+CYBERSECURITY
+</text>
+
+<text x="500"
+y="684"
+class="violet"
+font-size="12">
+EXPLORING
+</text>
+
+
+<!-- ===================================================== -->
+<!-- TERMINAL OUTPUT -->
+<!-- ===================================================== -->
+
+<rect x="885"
+y="490"
+width="480"
+height="210"
+rx="12"
+class="panel"/>
+
+<text x="910"
+y="520"
+class="violet"
+font-size="13">
+TERMINAL OUTPUT
+</text>
+
+<line x1="910"
+y1="535"
+x2="1340"
+y2="535"
+stroke="#164e63"/>
+
+<text x="910"
+y="565"
+class="cyan"
+font-size="12">
+&gt; scan --profile
+</text>
+
+<text x="910"
+y="590"
+class="label">
+IDENTITY
+</text>
+
+<text x="1010"
+y="590"
+class="cyan"
+font-size="12">
+FOUND
+</text>
+
+<text x="910"
+y="615"
+class="label">
+STACK
+</text>
+
+<text x="1010"
+y="615"
+class="cyan"
+font-size="12">
+17 MODULES
+</text>
+
+<text x="910"
+y="640"
+class="label">
+GITHUB
+</text>
+
+<text x="1010"
+y="640"
+class="cyan"
+font-size="12">
+CONNECTED
+</text>
+
+<text x="910"
+y="665"
+class="label">
+SYSTEM
+</text>
+
+<text x="1010"
+y="665"
+class="cyan"
+font-size="12">
+STABLE
+</text>
+
+
+<!-- ===================================================== -->
+<!-- SCAN BEAM -->
+<!-- ===================================================== -->
+
+<rect x="30"
+y="100"
+width="1340"
+height="2"
+fill="#22d3ee"
+opacity=".15"
+class="scanbeam"/>
+
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
+
+<text x="35"
+y="730"
+class="label">
+ADITYA OS v1.0
+</text>
+
+<text x="1365"
+y="730"
+text-anchor="end"
+class="label">
+KERNEL 01 • SYSTEM READY
+</text>
+
+
+</svg>
