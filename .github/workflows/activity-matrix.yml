@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  update-matrix:
+  update-breaker:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,6 @@ jobs:
           from datetime import datetime, timedelta, timezone
 
           username = "Adix10"
-          token = os.environ["GITHUB_TOKEN"]
 
           end_date = datetime.now(timezone.utc)
           start_date = end_date - timedelta(days=365)
@@ -65,7 +64,7 @@ jobs:
               "https://api.github.com/graphql",
               data=payload,
               headers={
-                  "Authorization": f"Bearer {token}",
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
                   "Content-Type": "application/json",
                   "User-Agent": "Adix10-Contribution-Breaker"
               },
@@ -83,6 +82,7 @@ jobs:
           total = calendar["totalContributions"]
 
           days = []
+
           for week in calendar["weeks"]:
               days.extend(week["contributionDays"])
 
@@ -106,19 +106,20 @@ jobs:
 
           svg = []
 
-          svg.append('''<svg xmlns="http://www.w3.org/2000/svg"
+          svg.append(f'''<svg xmlns="http://www.w3.org/2000/svg"
           width="1100"
           height="500"
           viewBox="0 0 1100 500">
 
           <defs>
+
             <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#020617"/>
               <stop offset="50%" stop-color="#07111F"/>
               <stop offset="100%" stop-color="#020617"/>
             </linearGradient>
 
-            <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
+            <linearGradient id="paddle" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#0891B2"/>
               <stop offset="50%" stop-color="#38BDF8"/>
               <stop offset="100%" stop-color="#67E8F9"/>
@@ -132,71 +133,238 @@ jobs:
               </feMerge>
             </filter>
 
-            <filter id="smallGlow">
-              <feGaussianBlur stdDeviation="2"/>
+            <filter id="ballGlow">
+              <feGaussianBlur stdDeviation="7"/>
             </filter>
 
+            <pattern id="grid"
+                     width="25"
+                     height="25"
+                     patternUnits="userSpaceOnUse">
+              <path d="M 25 0 L 0 0 0 25"
+                    fill="none"
+                    stroke="#0F2535"
+                    stroke-width="0.7"/>
+            </pattern>
+
             <style>
-              .mono {{
-                font-family: monospace;
-                letter-spacing: 1px;
-              }}
 
-              .tiny {{
-                font-family: monospace;
-                font-size: 11px;
-                letter-spacing: 1px;
-              }}
-
-              .brick {{
-                animation: brickPulse 3s ease-in-out infinite;
+              .brick1 {{
+                animation: brickPulse1 3s ease-in-out infinite;
               }}
 
               .brick2 {{
-                animation: brickPulse 4s ease-in-out infinite;
+                animation: brickPulse2 4s ease-in-out infinite;
               }}
 
               .brick3 {{
-                animation: brickPulse 5s ease-in-out infinite;
+                animation: brickPulse3 5s ease-in-out infinite;
               }}
 
-              .ball {{
-                animation: ballMove 3s ease-in-out infinite;
+              .gameBall {{
+                animation:
+                  ballMove 3.6s linear infinite,
+                  ballGlow 1.2s ease-in-out infinite;
+                transform-box: fill-box;
+                transform-origin: center;
+              }}
+
+              .paddle {{
+                animation: paddleMove 3.6s ease-in-out infinite;
+              }}
+
+              .impact1 {{
+                animation: impact 3.6s linear infinite;
+              }}
+
+              .impact2 {{
+                animation: impact2 3.6s linear infinite;
               }}
 
               .scan {{
                 animation: scanMove 4s linear infinite;
               }}
 
-              @keyframes brickPulse {{
-                0%, 100% {{ opacity: 0.82; }}
+              @keyframes brickPulse1 {{
+                0%, 100% {{ opacity: .72; }}
                 50% {{ opacity: 1; }}
               }}
 
+              @keyframes brickPulse2 {{
+                0%, 100% {{ opacity: .8; }}
+                50% {{ opacity: 1; }}
+              }}
+
+              @keyframes brickPulse3 {{
+                0%, 100% {{ opacity: .86; }}
+                50% {{ opacity: 1; }}
+              }}
+
+              /*
+                Breakout trajectory:
+                start near paddle
+                travel upward
+                strike upper blocks
+                return downward
+                hit paddle
+                repeat
+              */
+
               @keyframes ballMove {{
-                0% {{ transform: translate(0,0); }}
-                50% {{ transform: translate(70px,-30px); }}
-                100% {{ transform: translate(0,0); }}
+
+                0% {{
+                  transform: translate(0px, 0px);
+                }}
+
+                18% {{
+                  transform: translate(-105px, -115px);
+                }}
+
+                35% {{
+                  transform: translate(35px, -205px);
+                }}
+
+                50% {{
+                  transform: translate(170px, -115px);
+                }}
+
+                67% {{
+                  transform: translate(65px, -15px);
+                }}
+
+                82% {{
+                  transform: translate(-80px, -95px);
+                }}
+
+                100% {{
+                  transform: translate(0px, 0px);
+                }}
+
+              }}
+
+              @keyframes paddleMove {{
+
+                0% {{
+                  transform: translateX(0px);
+                }}
+
+                18% {{
+                  transform: translateX(-90px);
+                }}
+
+                35% {{
+                  transform: translateX(70px);
+                }}
+
+                50% {{
+                  transform: translateX(120px);
+                }}
+
+                67% {{
+                  transform: translateX(45px);
+                }}
+
+                82% {{
+                  transform: translateX(-75px);
+                }}
+
+                100% {{
+                  transform: translateX(0px);
+                }}
+
+              }}
+
+              @keyframes ballGlow {{
+
+                0%, 100% {{
+                  filter: drop-shadow(0 0 4px #38BDF8);
+                }}
+
+                50% {{
+                  filter: drop-shadow(0 0 12px #67E8F9);
+                }}
+
+              }}
+
+              @keyframes impact {{
+
+                0%, 30%, 100% {{
+                  opacity: 0;
+                  transform: scale(.2);
+                }}
+
+                35% {{
+                  opacity: 1;
+                  transform: scale(1.2);
+                }}
+
+                40% {{
+                  opacity: 0;
+                  transform: scale(1.8);
+                }}
+
+              }}
+
+              @keyframes impact2 {{
+
+                0%, 48%, 100% {{
+                  opacity: 0;
+                  transform: scale(.2);
+                }}
+
+                53% {{
+                  opacity: 1;
+                  transform: scale(1.3);
+                }}
+
+                58% {{
+                  opacity: 0;
+                  transform: scale(1.8);
+                }}
+
               }}
 
               @keyframes scanMove {{
-                0% {{ transform: translateY(0); opacity: 0; }}
-                15% {{ opacity: 0.7; }}
-                85% {{ opacity: 0.7; }}
-                100% {{ transform: translateY(280px); opacity: 0; }}
+
+                0% {{
+                  transform: translateY(0px);
+                  opacity: 0;
+                }}
+
+                15% {{
+                  opacity: .6;
+                }}
+
+                85% {{
+                  opacity: .6;
+                }}
+
+                100% {{
+                  transform: translateY(280px);
+                  opacity: 0;
+                }}
+
               }}
+
             </style>
+
           </defs>
 
-          <rect width="1100" height="500" fill="url(#bg)"/>
+          <!-- BACKGROUND -->
 
-          <rect x="25" y="25"
+          <rect width="1100"
+                height="500"
+                fill="url(#bg)"/>
+
+          <rect x="25"
+                y="25"
                 width="1050"
                 height="450"
                 rx="16"
                 fill="none"
-                stroke="#164E63"
-                stroke-width="1"/>
+                stroke="#164E63"/>
+
+          <!-- TITLE -->
 
           <text x="55"
                 y="70"
@@ -210,113 +378,122 @@ jobs:
           <text x="55"
                 y="94"
                 fill="#64748B"
-                class="tiny">
-            GITHUB ACTIVITY // LIVE DATA
+                font-size="11"
+                font-family="monospace"
+                letter-spacing="1">
+            BREAK THE BLOCKS // BUILD THE STREAK
           </text>
 
           <!-- PLAYER PANEL -->
 
           <rect x="45"
-                y="135"
+                y="125"
                 width="190"
-                height="285"
+                height="295"
                 rx="10"
                 fill="#040A12"
                 stroke="#1E3A4D"/>
 
           <text x="62"
-                y="170"
+                y="160"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             PLAYER
           </text>
 
           <text x="62"
-                y="198"
+                y="190"
                 fill="#67E8F9"
-                font-size="20"
-                class="mono">
+                font-size="21"
+                font-family="monospace">
             ADIX10
           </text>
 
           <text x="62"
-                y="235"
+                y="225"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             SCORE
           </text>
 
           <text x="62"
-                y="265"
+                y="255"
                 fill="#67E8F9"
                 font-size="25"
-                class="mono">
-            TOTAL_PLACEHOLDER
+                font-family="monospace">
+            {total}
           </text>
 
           <text x="62"
-                y="300"
+                y="290"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             MAX DAY
           </text>
 
           <text x="62"
-                y="330"
+                y="320"
                 fill="#A78BFA"
                 font-size="22"
-                class="mono">
-            MAX_PLACEHOLDER
+                font-family="monospace">
+            {max_count}
           </text>
 
           <text x="62"
-                y="362"
+                y="355"
                 fill="#64748B"
-                class="tiny">
-            DATA SOURCE
+                font-size="11"
+                font-family="monospace">
+            SOURCE
           </text>
 
           <text x="62"
-                y="386"
+                y="378"
                 fill="#CBD5E1"
                 font-size="13"
-                class="mono">
+                font-family="monospace">
             github.com
           </text>
 
           <text x="62"
-                y="408"
+                y="398"
                 fill="#CBD5E1"
                 font-size="13"
-                class="mono">
+                font-family="monospace">
             /Adix10
           </text>
 
-          <text x="62"
-                y="410"
-                fill="#22C55E"
-                class="tiny">
-            LIVE DATA STREAM
-          </text>
-
-          <!-- GAME AREA -->
+          <!-- GAME -->
 
           <rect x="270"
                 y="112"
                 width="788"
                 height="305"
                 rx="10"
-                fill="#040A12"
+                fill="#030811"
                 stroke="#1E3A4D"/>
 
-          <text x="295"
-                y="142"
-                fill="#64748B"
-                class="tiny">
-            BREAK THE BLOCKS // BUILD THE STREAK
-          </text>
+          <rect x="270"
+                y="112"
+                width="788"
+                height="305"
+                rx="10"
+                fill="url(#grid)"
+                opacity=".5"/>
 
-          <!-- CONTRIBUTION BRICKS -->
+          <!-- GAME BORDER -->
+
+          <line x1="285"
+                y1="150"
+                x2="1043"
+                y2="150"
+                stroke="#164E63"/>
+
+          <!-- CONTRIBUTION BLOCKS -->
+
           ''')
 
           start_x = 300
@@ -328,6 +505,7 @@ jobs:
           gap_y = 8
 
           for i, day in enumerate(days):
+
               col = i // 7
               row = i % 7
 
@@ -339,25 +517,30 @@ jobs:
               if lvl == 0:
                   fill = "#0B1724"
                   stroke = "#132536"
+
               elif lvl == 1:
                   fill = "#164E63"
                   stroke = "#155E75"
+
               elif lvl == 2:
                   fill = "#075985"
                   stroke = "#0284C7"
+
               elif lvl == 3:
                   fill = "#0284C7"
                   stroke = "#38BDF8"
+
               else:
                   fill = "#38BDF8"
                   stroke = "#67E8F9"
 
-              cls = "brick" if row % 3 == 0 else (
+              cls = "brick1" if row % 3 == 0 else (
                   "brick2" if row % 3 == 1 else "brick3"
               )
 
               svg.append(
-                  f'''<rect class="{cls}"
+                  f'''<rect
+                  class="{cls}"
                   x="{x}"
                   y="{y}"
                   width="{brick_w}"
@@ -370,46 +553,80 @@ jobs:
 
           svg.append('''
 
-          <!-- BALL -->
+          <!-- FAKE IMPACT FLASHES -->
 
-          <g class="ball" transform="translate(710 285)">
-            <circle r="7"
-                    fill="#67E8F9"
-                    filter="url(#glow)"/>
-            <circle r="3"
-                    fill="#FFFFFF"/>
-          </g>
+          <circle class="impact1"
+                  cx="655"
+                  cy="170"
+                  r="15"
+                  fill="none"
+                  stroke="#67E8F9"
+                  stroke-width="2"/>
+
+          <circle class="impact2"
+                  cx="825"
+                  cy="215"
+                  r="15"
+                  fill="none"
+                  stroke="#A78BFA"
+                  stroke-width="2"/>
+
+          <!-- BALL TRAIL -->
+
+          <circle cx="690"
+                  cy="350"
+                  r="10"
+                  fill="#38BDF8"
+                  opacity=".12"
+                  filter="url(#ballGlow)"
+                  class="gameBall"/>
+
+          <circle cx="690"
+                  cy="350"
+                  r="6"
+                  fill="#67E8F9"
+                  filter="url(#glow)"
+                  class="gameBall"/>
+
+          <circle cx="690"
+                  cy="350"
+                  r="2.5"
+                  fill="#FFFFFF"
+                  class="gameBall"/>
 
           <!-- PADDLE -->
 
-          <rect x="650"
-                y="365"
-                width="150"
-                height="9"
-                rx="5"
-                fill="url(#cyan)"
-                filter="url(#smallGlow)"/>
+          <g class="paddle">
 
-          <rect x="680"
-                y="363"
-                width="90"
-                height="13"
-                rx="6"
-                fill="none"
-                stroke="#67E8F9"
-                stroke-opacity="0.4"/>
+            <rect x="630"
+                  y="365"
+                  width="150"
+                  height="10"
+                  rx="5"
+                  fill="url(#paddle)"
+                  filter="url(#glow)"/>
 
-          <!-- SCAN LINE -->
+            <rect x="650"
+                  y="363"
+                  width="110"
+                  height="14"
+                  rx="7"
+                  fill="none"
+                  stroke="#67E8F9"
+                  stroke-opacity=".45"/>
+
+          </g>
+
+          <!-- SCAN -->
 
           <rect class="scan"
                 x="285"
                 y="150"
                 width="758"
                 height="1"
-                fill="#38BDF8"
-                opacity="0.5"/>
+                fill="#38BDF8"/>
 
-          <!-- BOTTOM HUD -->
+          <!-- HUD -->
 
           <line x1="295"
                 y1="395"
@@ -420,56 +637,64 @@ jobs:
           <text x="295"
                 y="410"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             BLOCKS
           </text>
 
           <text x="350"
                 y="410"
                 fill="#CBD5E1"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             364 DAYS
           </text>
 
           <text x="520"
                 y="410"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             STATUS
           </text>
 
           <text x="575"
                 y="410"
                 fill="#22C55E"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             ACTIVE
           </text>
 
           <text x="700"
                 y="410"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             UPDATE
           </text>
 
           <text x="760"
                 y="410"
                 fill="#CBD5E1"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             24H
           </text>
 
           <text x="895"
                 y="410"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             USER
           </text>
 
           <text x="945"
                 y="410"
                 fill="#67E8F9"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             ADIX10
           </text>
 
@@ -478,7 +703,8 @@ jobs:
           <text x="300"
                 y="450"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             ACTIVITY LEVEL
           </text>
 
@@ -491,14 +717,16 @@ jobs:
           <text x="535"
                 y="451"
                 fill="#64748B"
-                class="tiny">
+                font-size="11"
+                font-family="monospace">
             LOW
           </text>
 
           <text x="1010"
                 y="451"
                 fill="#64748B"
-                class="tiny"
+                font-size="11"
+                font-family="monospace"
                 text-anchor="end">
             HIGH
           </text>
@@ -506,24 +734,12 @@ jobs:
           </svg>
           ''')
 
-          svg_text = "\n".join(svg)
-
-          svg_text = svg_text.replace(
-              "TOTAL_PLACEHOLDER",
-              str(total)
-          )
-
-          svg_text = svg_text.replace(
-              "MAX_PLACEHOLDER",
-              str(max_count)
-          )
-
           with open(
               "assets/activity-matrix.svg",
               "w",
               encoding="utf-8"
           ) as f:
-              f.write(svg_text)
+              f.write("".join(svg))
 
           print("Contribution Breaker generated successfully.")
           print(f"Total contributions: {total}")
@@ -540,6 +756,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Update contribution breaker"
+            git commit -m "Upgrade contribution breaker animation"
             git push
           fi
